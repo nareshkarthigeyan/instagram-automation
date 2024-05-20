@@ -84,7 +84,7 @@ def post_to_insta(text, caption):
         print("Uploading...")
         ig.photo_upload(image_path, caption)
         print("Post Successful.")
-        return 1
+        return 0
     except Exception as e:
         print(f"An error occurred: {e}")
         return 1
