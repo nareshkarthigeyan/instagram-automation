@@ -137,10 +137,6 @@
             "quote": "\u201cSomeday, I will surpass you. It's not that I'm being held back by you, but because I admire you so much.\u201d - Rock Lee, Naruto"
         },
         {
-            "id": 36,
-            "quote": "\u201cDon't be so quick to throw away your life. No matter how disgraceful or embarrassing it may be, you need to keep struggling to find your way out until the very end.\u201d - Clare, Claymore"
-        },
-        {
             "id": 37,
             "quote": "\u201cLife is not about who lived the longest, it's about who smiled the brightest.\u201d - Natsu Dragneel, Fairy Tail"
         },
@@ -215,10 +211,6 @@
         {
             "id": 55,
             "quote": "\u201cThe true measure of a shinobi is not how he lives but how he dies. It's not what they do in life but what they did before dying that proves their worth.\u201d - Jiraiya, Naruto"
-        },
-        {
-            "id": 57,
-            "quote": "\u201cHard work is worthless for those that don't believe in themselves.\u201d - Naruto Uzumaki, Naruto"
         },
         {
             "id": 58,
@@ -307,6 +299,18 @@
         {
             "id": 80,
             "quote": "\u201cYou have power over your mind - not outside events. Realize this, and you will find strength.\u201d - Marcus Aurelius"
+        },
+        {
+            "id": 81,
+            "quote": "balls"
+        },
+        {
+            "id": 82,
+            "quote": "man"
+        },
+        {
+            "id": 83,
+            "quote": "hjahah"
         }
     ]
 }
