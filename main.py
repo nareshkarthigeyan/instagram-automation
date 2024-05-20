@@ -34,11 +34,13 @@ def create_image_with_text(text, image_counter_path=script_path + "image_counter
         draw = ImageDraw.Draw(image)
 
         # Load a font
-        font_path = "/usr/share/fonts/truetype/freefont/FreeSerif.ttf"  
+        fontList = ["FreeMonoBoldOblique.ttf", "FreeMono.ttf","FreeSansOblique.ttf","FreeSerifBold.ttf",'FreeMonoBold.ttf','FreeSansBoldOblique.ttf','FreeSans.ttf','FreeSerifItalic.ttf','FreeMonoOblique.ttf','FreeSansBold.ttf','FreeSerifBoldItalic.ttf','FreeSerif.ttf']
+        fontChosen = random.choice(fontList)
+        font_path = f"/usr/share/fonts/truetype/freefont/{fontChosen}" 
         if not os.path.exists(font_path):
             raise FileNotFoundError(f"Font file not found: {font_path}")
         if len(text) > 25:
-            size = random.randint(24, 72)
+            size = random.randint(28, 72)
         else:
             size = random.randint(32, 92)
         font = ImageFont.truetype(font_path, size)
@@ -48,9 +50,14 @@ def create_image_with_text(text, image_counter_path=script_path + "image_counter
         rightLimit = 200
         x = random.randint(8, 120)
         y = random.randint(8, 111)
-        wrapped_text = textwrap.fill(text, width=50) 
-        brightness = 1
-        draw.text((x, y), wrapped_text, font=font, fill=((255 - r)*brightness, (255 - g)*brightness, (255- b)*brightness, 255))
+        # wrapped_text = textwrap.fill(text, width=50) 
+        # brightness = 1
+        # draw.text((x, y), wrapped_text, font=font, fill=((255 - r)*brightness, (255 - g)*brightness, (255- b)*brightness, 255))
+
+        margin = offset = 40
+        for line in textwrap.wrap(text, width=40):
+            draw.text((margin, offset), line, font=font, fill=((255 - r), (255 - g), (255- b), 255))
+            offset += font.getbbox(line)[3] + 10
 
         # Save the image
         image_path = script_path + f"posts/{count}.png"
@@ -77,7 +84,7 @@ def post_to_insta(text, caption):
         print("Uploading...")
         ig.photo_upload(image_path, caption)
         print("Post Successful.")
-        return 0
+        return 1
     except Exception as e:
         print(f"An error occurred: {e}")
         return 1
