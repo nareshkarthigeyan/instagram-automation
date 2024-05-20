@@ -1,0 +1,4 @@
+.env
+posts/
+cron.log
+.vscode
