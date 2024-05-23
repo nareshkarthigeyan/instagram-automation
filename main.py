@@ -1,12 +1,11 @@
 import os
 import random
 import textwrap
-import requests
 from PIL import Image, ImageDraw, ImageFont
 from instagrapi import Client
 from dotenv import load_dotenv
 import json
-from datetime import datetime
+import datetime
 import time
 
 # Load environment variables from .env file
@@ -34,30 +33,34 @@ def create_image_with_text(text, image_counter_path=script_path + "image_counter
         draw = ImageDraw.Draw(image)
 
         # Load a font
-        fontList = ["FreeMonoBoldOblique.ttf", "FreeMono.ttf","FreeSansOblique.ttf","FreeSerifBold.ttf",'FreeMonoBold.ttf','FreeSansBoldOblique.ttf','FreeSans.ttf','FreeSerifItalic.ttf','FreeMonoOblique.ttf','FreeSansBold.ttf','FreeSerifBoldItalic.ttf','FreeSerif.ttf']
+        fontList = [f for f in os.listdir(f"/home/nareshkarthigeyan/Naresh/cs/code/intagramautomater-python/fonts")]
         fontChosen = random.choice(fontList)
-        font_path = f"/usr/share/fonts/truetype/freefont/{fontChosen}" 
+        font_path = f"/home/nareshkarthigeyan/Naresh/cs/code/intagramautomater-python/fonts/{fontChosen}" 
         if not os.path.exists(font_path):
             raise FileNotFoundError(f"Font file not found: {font_path}")
         if len(text) > 25:
             size = random.randint(28, 72)
         else:
-            size = random.randint(32, 92)
+            size = random.randint(32, 82)
         font = ImageFont.truetype(font_path, size)
 
         text_width, text_height = 800, 800  # Maximum width and height of the text box
         # Add text to image
         rightLimit = 200
-        x = random.randint(8, 120)
-        y = random.randint(8, 111)
+        x = random.randint(8, 80)
+        y = random.randint(8, 460)
         # wrapped_text = textwrap.fill(text, width=50) 
         # brightness = 1
         # draw.text((x, y), wrapped_text, font=font, fill=((255 - r)*brightness, (255 - g)*brightness, (255- b)*brightness, 255))
 
         margin = offset = 40
-        for line in textwrap.wrap(text, width=40):
-            draw.text((margin, offset), line, font=font, fill=((255 - r), (255 - g), (255- b), 255))
-            offset += font.getbbox(line)[3] + 10
+        if size > 59:
+            text_width = 35
+        else:
+            text_width = 42
+        for line in textwrap.wrap(text, width=text_width):
+            draw.text((x, y), line, font=font, fill=((255 - r), (255 - g), (255- b), 255))
+            y += font.getbbox(line)[3] + 10
 
         # Save the image
         image_path = script_path + f"posts/{count}.png"
@@ -84,6 +87,8 @@ def post_to_insta(text, caption):
         print("Uploading...")
         ig.photo_upload(image_path, caption)
         print("Post Successful.")
+        t = time.localtime()
+        print(time.strftime("%d/%m/%Y %H:%M:%S.%MS", t))
         return 0
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -100,7 +105,10 @@ def main():
     chosen_quote = quotes[chosen]
     text = chosen_quote["quote"]
     print(text)
-    caption = ""  # You can add caption logic here if needed
+    caption = f"Quote number {chosen}"  # You can add caption logic here if needed
+
+    # image_path = create_image_with_text(text)
+
     x = post_to_insta(text, caption)
     if x == 0:
         quotes.pop(chosen)
