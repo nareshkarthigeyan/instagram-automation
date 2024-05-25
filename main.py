@@ -8,14 +8,12 @@ import json
 import datetime
 import time
 
-# Load environment variables from .env file
 load_dotenv()
 
 script_path = "/home/nareshkarthigeyan/Naresh/cs/code/intagramautomater-python/"
 
 def create_image_with_text(text, image_counter_path=script_path + "image_counter.txt"):
     try:
-        # Read and increment the image counter
         if os.path.exists(image_counter_path):
             with open(image_counter_path, "r") as f:
                 count = int(f.read().strip())
@@ -25,14 +23,12 @@ def create_image_with_text(text, image_counter_path=script_path + "image_counter
         with open(image_counter_path, "w") as f:
             f.write(str(count))
         
-        # Create a new image with black background
         r = random.randint(0, 255)
         g = random.randint(0, 255)
         b = random.randint(0, 255)
         image = Image.new("RGBA", (1200, 1200), (r, g, b, 255))
         draw = ImageDraw.Draw(image)
 
-        # Load a font
         fontList = [f for f in os.listdir(f"/home/nareshkarthigeyan/Naresh/cs/code/intagramautomater-python/fonts")]
         fontChosen = random.choice(fontList)
         font_path = f"/home/nareshkarthigeyan/Naresh/cs/code/intagramautomater-python/fonts/{fontChosen}" 
@@ -44,16 +40,11 @@ def create_image_with_text(text, image_counter_path=script_path + "image_counter
             size = random.randint(32, 82)
         font = ImageFont.truetype(font_path, size)
 
-        text_width, text_height = 800, 800  # Maximum width and height of the text box
-        # Add text to image
-        rightLimit = 200
+        text_width, text_height = 800, 800  
+
         x = random.randint(8, 80)
         y = random.randint(8, 460)
-        # wrapped_text = textwrap.fill(text, width=50) 
-        # brightness = 1
-        # draw.text((x, y), wrapped_text, font=font, fill=((255 - r)*brightness, (255 - g)*brightness, (255- b)*brightness, 255))
 
-        margin = offset = 40
         if size > 59:
             text_width = 35
         else:
@@ -72,18 +63,45 @@ def create_image_with_text(text, image_counter_path=script_path + "image_counter
         print(f"Error creating image: {e}")
         raise
 
+session_file = "ig_session.json"
+
+def save_session(session_file, data):
+    with open(session_file, 'w') as file:
+        json.dump(data, file)
+
+def load_session(session_file):
+    if os.path.exists(session_file):
+        with open(session_file, 'r') as file:
+            return json.load(file)
+    return None
+
+def login(username, password):
+    session_data = load_session(session_file)
+    api = Client()
+    if session_data:
+        try:
+            api.load_settings(session_data)
+            api.login(username, password)
+            print("Loaded session data")
+        except Exception as e:
+            print("Session data expired, logging in again")
+            api.login(username, password)
+            save_session(session_file, api.get_settings())
+            print("Saved new session data")
+    else:
+        api.login(username, password)
+        save_session(session_file, api.get_settings())
+        print("Saved session data")
+    return api
+
 def post_to_insta(text, caption):
     try:
-        # Create an image with the provided text
         print("Locating File")
         image_path = create_image_with_text(text)
 
-        # Initialize the Instagram client
         print("Logging In...")
-        ig = Client()
-        ig.login(os.getenv("IG_USERNAME"), os.getenv("IG_PASSWORD"))
+        ig = login(os.getenv("IG_USERNAME"), os.getenv("IG_PASSWORD"))
 
-        # Post the image to Instagram
         print("Uploading...")
         ig.photo_upload(image_path, caption)
         print("Post Successful.")
@@ -94,21 +112,20 @@ def post_to_insta(text, caption):
         print(f"An error occurred: {e}")
         return 1
 
+
+
 def main():
     content_path = script_path + "content.json"
     with open(content_path, "r") as f:
         data = json.load(f)
-        quotes = data["quotes"]  # Assuming "quotes" is the key for the list of quotes
+        quotes = data["quotes"]
     
     chosen = random.randint(0, len(quotes) - 1)
     print(chosen)
     chosen_quote = quotes[chosen]
     text = chosen_quote["quote"]
     print(text)
-    caption = f"Quote number {chosen}"  # You can add caption logic here if needed
-
-    # image_path = create_image_with_text(text)
-
+    caption = f"Quote number {chosen}"  
     x = post_to_insta(text, caption)
     if x == 0:
         quotes.pop(chosen)
