@@ -8,7 +8,7 @@ if os.path.exists(path):
     with open(path, "r") as f:
         text = f.read()
         data = text.split("\n")
-        data = [line for line in data if line.strip()]
+        data = [line.replace('"', '') for line in data if line.strip()]
         print(data)
 
     if os.path.exists(JsonPath):
