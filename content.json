@@ -1,44 +1,32 @@
 {
-  "quotes": [
-    {
-      "id": 12,
-      "quote": "If you do not find a way no one will."
-    },
-    {
-      "id": 13,
-      "quote": "Everything will be okay in the end. If it's not okay, it's not the end. - John Lennon"
-    },
-    {
-      "id": 14,
-      "quote": "Deeds will not be less valiant because they are unpraised. - Aragorn (The Return of the King\u200b)"
-    },
-    {
-      "id": 15,
-      "quote": "The work you do while you procrastinate is probably the work you should be doing for the rest of your life. ~Jessica Hische"
-    },
-    {
-      "id": 16,
-      "quote": "Optimize your life for good conversations, and judge everything you read by how many good conversations it leads to."
-    },
-    {
-      "id": 17,
-      "quote": "Talking over each other is underrated. Some of the best conversations are between people with mutual respect who constantly interrupt each other for the sake of getting to the point and to the epiphany faster. ~Anu"
-    },
-    {
-      "id": 18,
-      "quote": "Understanding someone is the closest thing to magic; though difficult, the answer lies in the attempt."
-    },
-    {
-      "id": 19,
-      "quote": "To be Loved is to be worth the Inconvinience"
-    },
-    {
-      "id": 20,
-      "quote": "Comforting friends will save you tears but confrontational friends will save your life."
-    },
-    {
-      "id": 21,
-      "quote": "Sing like no one is listening, love like you've never been hurt, dance like no one is watching, and live like it is heaven on earth. - Mark Twain "
-    }
-  ]
+    "quotes": [
+        {
+            "id": 2,
+            "quote": "Hello...?"
+        },
+        {
+            "id": 3,
+            "quote": "W-where am I?"
+        },
+        {
+            "id": 4,
+            "quote": "Huh?"
+        },
+        {
+            "id": 5,
+            "quote": "Okay, I see how it is..."
+        },
+        {
+            "id": 6,
+            "quote": "I-I'm on instagram..."
+        },
+        {
+            "id": 7,
+            "quote": "but why?"
+        },
+        {
+            "id": 8,
+            "quote": "IDK"
+        }
+    ]
 }
